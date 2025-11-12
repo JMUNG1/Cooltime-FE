@@ -4,6 +4,7 @@ import Header from '@/components/shared/Header'
 import CategoryList from '@/components/category/CategoryList'
 import { useNavigate } from 'react-router-dom'
 import { getCategoryData } from '@/apis/report/categoryList'
+import { motion, easeOut } from 'framer-motion'
 
 const CategoryPage = () => {
   const { theme, nickname } = useUserStore()
@@ -40,6 +41,21 @@ const CategoryPage = () => {
   }
   const background = color[theme]?.background ?? 'bg-linear-to-b from-blue-200 to-gray-100'
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: easeOut } },
+  }
+
   return (
     <div className='flex flex-col items-center'>
       <div className={`flex flex-col w-full max-w-[440px] min-h-screen items-center ${background}`}>
@@ -52,9 +68,18 @@ const CategoryPage = () => {
           <p className='body-02-1_2 text-gray-900 -mt-1'>집중이 필요한 패턴을 찾아보세요.</p>
         </div>
         {data ? (
-          data.categoryRankItems.map((item) => (
-            <CategoryList key={item.categoryId} data={item} color={color[theme]?.number} />
-          ))
+          <motion.div
+            variants={containerVariants}
+            initial='hidden'
+            animate='visible'
+            className='w-full flex flex-col gap-2 items-center'
+          >
+            {data.categoryRankItems.map((item, index) => (
+              <motion.div key={item.categoryId} variants={itemVariants}>
+                <CategoryList data={item} color={color[theme]?.number} />
+              </motion.div>
+            ))}
+          </motion.div>
         ) : (
           <p className='body-02-1_2 text-gray-600 mt-10'>카테고리 정보를 불러오는 중...</p>
         )}

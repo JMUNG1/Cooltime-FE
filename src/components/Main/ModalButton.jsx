@@ -1,26 +1,13 @@
 import { useUserStore } from '@/store/store'
-import {
-  perfectDefaultReasonList,
-  lowMotivationDefaultReasonList,
-  stressDefaultReasonList,
-} from '@/data/calendarData'
 import X from '@/assets/X.svg?react'
 
-const ModalButton = ({ text, selected = false, onClick = () => {}, onDelete = () => {} }) => {
-  // 디폴트 옵션
-  const defaultActivity = ['공부', '운동', '독서']
-  const defaultOption = ['미뤘어요', '했어요']
-  const defaultOptionSet = new Set([
-    ...defaultActivity,
-    ...defaultOption,
-    ...perfectDefaultReasonList,
-    ...lowMotivationDefaultReasonList,
-    ...stressDefaultReasonList,
-    '+',
-  ])
-
-  const defaultBtn = defaultOptionSet.has(text)
-
+const ModalButton = ({
+  text,
+  selected = false,
+  onClick = () => {},
+  onDelete = () => {},
+  isDefault,
+}) => {
   // 테마 로직
   const { theme } = useUserStore()
   const color = {
@@ -37,7 +24,7 @@ const ModalButton = ({ text, selected = false, onClick = () => {}, onDelete = ()
         className={`relative inline-flex text-[14px] px-3.5 py-1.5 rounded-3xl border transition-colors duration-200 cursor-pointer ${labelColor}`}
       >
         {text}
-        {!defaultBtn && (
+        {!isDefault && (
           <span
             role='button'
             onClick={(e) => {

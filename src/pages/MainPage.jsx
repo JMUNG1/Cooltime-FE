@@ -76,7 +76,7 @@ const MainPage = () => {
       {showRestriction && (
         <ConfirmModal
           onClose={() => setShowRestriction(false)}
-          message={'기록은 당일만 가능해요!'}
+          message={'기록은 당일에만 가능해요!'}
           closeModal={closeModal}
         />
       )}

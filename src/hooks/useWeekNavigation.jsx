@@ -1,47 +1,53 @@
 import { useState } from 'react'
-import { getCurrentDate } from '@/utils/dateUtils'
+import { getCurrentDate, getWeeksInMonthISO } from '@/utils/dateUtils'
 
 export const useWeekNavigation = () => {
-  const { month: nowMonth, week: nowWeek } = getCurrentDate()
-  const weekNames = ['첫째주', '둘째주', '셋째주', '넷째주', '다섯째주']
-
-  const initialWeekIndex = weekNames.indexOf(nowWeek)
-  const [currentWeek, setCurrentWeek] = useState(initialWeekIndex)
+  const { month: nowMonth, week: nowWeek, weeks: currentWeeks } = getCurrentDate()
   const [currentMonth, setCurrentMonth] = useState(nowMonth)
+  const [weekNames, setWeekNames] = useState(currentWeeks)
+  const [currentWeek, setCurrentWeek] = useState(currentWeeks.indexOf(nowWeek))
+
+  const updateWeeks = (month) => {
+    const weeks = getWeeksInMonthISO(new Date().getFullYear(), month)
+    setWeekNames(weeks)
+    return weeks
+  }
 
   const handlePrevWeek = () => {
     if (currentWeek > 0) {
       setCurrentWeek(currentWeek - 1)
     } else {
-      setCurrentMonth((prev) => (prev === 1 ? 12 : prev - 1))
-      setCurrentWeek(4)
+      const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1
+      const weeks = updateWeeks(prevMonth)
+      setCurrentMonth(prevMonth)
+      setCurrentWeek(weeks.length - 1)
     }
   }
 
   const handleNextWeek = () => {
-    const isFutureMonth = currentMonth > nowMonth
-    const isFutureWeek = currentMonth === nowMonth && currentWeek >= weekNames.indexOf(nowWeek)
-
-    if (isFutureMonth || isFutureWeek) return
-    if (currentWeek < 4) {
+    if (currentWeek < weekNames.length - 1) {
       setCurrentWeek(currentWeek + 1)
     } else {
-      setCurrentMonth((prev) => (prev === 12 ? 1 : prev + 1))
+      const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1
+      const weeks = updateWeeks(nextMonth)
+      setCurrentMonth(nextMonth)
       setCurrentWeek(0)
     }
   }
 
   const handlePrevMonth = () => {
-    setCurrentMonth((prev) => (prev === 1 ? 12 : prev - 1))
-    setCurrentWeek((prev) => Math.max(0, Math.min(prev, 4)))
+    const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1
+    const weeks = updateWeeks(prevMonth)
+    setCurrentMonth(prevMonth)
+    setCurrentWeek(Math.min(currentWeek, weeks.length - 1))
   }
 
   const handleNextMonth = () => {
-    const isFuture = currentMonth >= nowMonth
-    if (isFuture) return
-
-    setCurrentMonth((prev) => (prev === 12 ? 1 : prev + 1))
-    setCurrentWeek((prev) => Math.max(0, Math.min(prev, 4)))
+    if (currentMonth >= nowMonth) return
+    const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1
+    const weeks = updateWeeks(nextMonth)
+    setCurrentMonth(nextMonth)
+    setCurrentWeek(Math.min(currentWeek, weeks.length - 1))
   }
 
   const isNextDisabled =

@@ -132,7 +132,6 @@ const SignupPage = () => {
       if (activeStep < totalSteps - 1) {
         setActiveStep((prev) => prev + 1)
       } else {
-        console.log(formData)
         signup(formData)
         navigate('/signupwelcome')
       }

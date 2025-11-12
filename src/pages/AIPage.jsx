@@ -1,16 +1,36 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { useUserStore } from '@/store/store'
 import Header from '@/components/shared/Header'
 import Left from '@/assets/Left.svg?react'
 import Right from '@/assets/Right.svg?react'
 import GreyRight from '@/assets/GreyRight.svg?react'
 import { useWeekNavigation } from '@/hooks/useWeekNavigation'
+import { getCurrentDate } from '@/utils/dateUtils'
 import AIContainer from '@/components/ai/AIContainer'
+import { getAIReportData } from '@/apis/report/AIReport'
+import Loading from '@/components/shared/Loading'
 
 const AIPage = () => {
   const { weekNames, currentWeek, currentMonth, handlePrevWeek, handleNextWeek, isNextDisabled } =
     useWeekNavigation()
   const { theme } = useUserStore()
+  const { year } = getCurrentDate()
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(year, currentMonth, currentWeek + 1)
+        const data = await getAIReportData(year, currentMonth, currentWeek + 1)
+        setData(data.data)
+        console.log(data.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [year, currentMonth, currentWeek])
+
   const color = {
     blue: {
       background: 'bg-linear-to-b from-blue-200 to-gray-100',
@@ -30,7 +50,7 @@ const AIPage = () => {
   }
   const backgound = color[theme]?.background ?? 'bg-linear-to-b from-blue-200 to-gray-100'
 
-  return (
+  return data ? (
     <div className='flex flex-col items-center'>
       <div className={`flex flex-col w-full max-w-[440px] min-h-screen items-center ${backgound}`}>
         <Header label='AI 레포트' />
@@ -51,16 +71,26 @@ const AIPage = () => {
           </p>
         </div>
         <div className='mt-10'>
-          <AIContainer text={''} color={color[theme]} Header={'주로 이런 패턴을 보여요.'} />
-          <AIContainer text={''} color={color[theme]} Header={'이렇게 해보면 좋아요.'} />
           <AIContainer
-            text={''}
+            text={data.patternAnalysis || ''}
+            color={color[theme]}
+            Header={'주로 이런 패턴을 보여요.'}
+          />
+          <AIContainer
+            text={data.solution || ''}
+            color={color[theme]}
+            Header={'이렇게 해보면 좋아요.'}
+          />
+          <AIContainer
+            text={data.weeklyComparison || ''}
             color={color[theme]}
             Header={'저번 주와 비교하면 이런 패턴이 있어요.'}
           />
         </div>
       </div>
     </div>
+  ) : (
+    <Loading />
   )
 }
 

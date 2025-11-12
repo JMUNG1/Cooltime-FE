@@ -25,29 +25,33 @@ export const useDidStore = create((set) => ({
 }))
 
 export const useCategoryStore = create((set) => ({
-  categories: ['공부', '운동', '독서'],
+  categories: [],
   selected: new Set(),
-  setCategories: (c) => set({ categories: c }),
-  toggleCategory: (c) =>
+  setCategories: (list) => set({ categories: list }),
+  toggleCategory: (name) =>
     set((state) => {
       const next = new Set(state.selected)
-      if (next.has(c)) {
-        next.delete(c)
-        return { selected: next }
-      }
-      next.add(c)
-      const didStore = useDidStore.getState()
-      if (didStore.selected.size === 0) {
-        didStore.toggleOption('미뤘어요')
+      if (next.has(name)) {
+        next.delete(name)
+      } else {
+        const didStore = useDidStore.getState()
+        if (didStore.selected.size === 0) {
+          didStore.toggleOption('미뤘어요')
+        }
+        next.add(name)
       }
       return { selected: next }
     }),
-  addCategory: (newC) =>
-    set((state) => {
-      if (!newC?.trim()) return state
-      if (state.categories.includes(newC)) return state
 
-      const updated = [...state.categories, newC]
+  addCategory: (newName) =>
+    set((state) => {
+      if (!newName?.trim()) return state
+      if (state.categories.some((c) => c.name === newName)) return state
+
+      const updated = [
+        ...state.categories,
+        { id: Date.now(), name: newName, isActive: true, isDefault: false },
+      ]
 
       const didStore = useDidStore.getState()
       if (didStore.selected.size === 0) {
@@ -56,58 +60,68 @@ export const useCategoryStore = create((set) => ({
 
       return { categories: updated }
     }),
-  removeCategory: (c) =>
+
+  removeCategory: (name) =>
     set((state) => ({
-      categories: state.categories.filter((x) => x !== c),
+      categories: state.categories.filter((c) => c.name !== name),
       selected: (() => {
         const next = new Set(state.selected)
-        next.delete(c)
+        next.delete(name)
         return next
       })(),
     })),
+
   clearSelected: () => set({ selected: new Set() }),
 }))
 
 export const useReasonStore = create((set) => ({
   reasons: [],
   selected: new Set(),
-  setReasons: (r) => set({ reasons: r }),
-  toggleReason: (r) =>
+  setReasons: (list) => set({ reasons: list }),
+
+  toggleReason: (name) =>
     set((state) => {
       const next = new Set(state.selected)
-      if (next.has(r)) {
-        next.delete(r)
-        return { selected: next }
-      }
-      next.add(r)
-      const didStore = useDidStore.getState()
-      if (didStore.selected.size === 0) {
-        didStore.toggleOption('미뤘어요')
+      if (next.has(name)) {
+        next.delete(name)
+      } else {
+        const didStore = useDidStore.getState()
+        if (didStore.selected.size === 0) {
+          didStore.toggleOption('미뤘어요')
+        }
+        next.add(name)
       }
       return { selected: next }
     }),
-  addReason: (newR) =>
-    set((state) => {
-      if (!newR?.trim()) return state
-      if (state.reasons.includes(newR)) return state
 
-      const updated = [...state.reasons, newR]
+  addReason: (newName) =>
+    set((state) => {
+      if (!newName?.trim()) return state
+      if (state.reasons.some((r) => r.name === newName)) return state
+
+      const updated = [
+        ...state.reasons,
+        { id: Date.now(), name: newName, isActive: true, isDefault: false },
+      ]
 
       const didStore = useDidStore.getState()
       if (didStore.selected.size === 0) {
         didStore.toggleOption('미뤘어요')
       }
+
       return { reasons: updated }
     }),
-  removeReason: (r) =>
+
+  removeReason: (name) =>
     set((state) => ({
-      reasons: state.reasons.filter((x) => x !== r),
+      reasons: state.reasons.filter((r) => r.name !== name),
       selected: (() => {
         const next = new Set(state.selected)
-        next.delete(r)
+        next.delete(name)
         return next
       })(),
     })),
+
   clearSelected: () => set({ selected: new Set() }),
 }))
 
@@ -130,6 +144,7 @@ export const useLogStore = create((set, get) => ({
   activity: [],
   reason: [],
   isPostponed: null,
+
   setCurrentLog: (log) =>
     set({
       currentLog: log,
@@ -138,10 +153,7 @@ export const useLogStore = create((set, get) => ({
       reason: log?.reasons?.map((r) => r.name) ?? [],
       isPostponed: log?.isPostponed ?? null,
     }),
-  setActivity: (a) => set({ activity: a }),
-  setReason: (r) => set({ reason: r }),
 
-  // 기존 선택 값 세팅
   initSelectionsFromCurrentLog: () => {
     const log = get().currentLog
     if (!log) return
@@ -150,45 +162,37 @@ export const useLogStore = create((set, get) => ({
     const categoryStore = useCategoryStore.getState()
     const reasonStore = useReasonStore.getState()
 
-    // 서버에서 온 활동, 이유 추출 후 저장
     const incomingActivities = log.activities || []
     const incomingReasons = log.reasons || []
 
-    if (incomingActivities.length > 0 && categoryStore.setCategories) {
-      const merged = [
-        ...categoryStore.categories,
-        ...incomingActivities
-          .map((a) => a.name)
-          .filter((name) => !categoryStore.categories.includes(name)),
-      ]
-      const activityNames = incomingActivities.map((a) => a.name)
-      get().setActivity(activityNames)
-      categoryStore.setCategories(merged)
-    }
-
-    if (incomingReasons.length > 0) {
-      const merged = [
-        ...reasonStore.reasons,
-        ...incomingReasons.map((r) => r.name).filter((name) => !reasonStore.reasons.includes(name)),
-      ]
-      const reasonNames = incomingReasons.map((a) => a.name)
-      get().setReason(reasonNames)
-      reasonStore.setReasons(merged)
-    }
-
-    // didStore
     didStore.clearSelected()
     didStore.toggleOption(log.isPostponed ? '미뤘어요' : '했어요')
 
-    // categoryStore
+    if (incomingActivities.length > 0) {
+      const mergedActivities = [
+        ...categoryStore.categories,
+        ...incomingActivities.filter(
+          (a) => !categoryStore.categories.some((c) => c.name === a.name),
+        ),
+      ]
+      categoryStore.setCategories(mergedActivities)
+    }
+
+    if (incomingReasons.length > 0) {
+      const mergedReasons = [
+        ...reasonStore.reasons,
+        ...incomingReasons.filter((r) => !reasonStore.reasons.some((c) => c.name === r.name)),
+      ]
+      reasonStore.setReasons(mergedReasons)
+    }
+
     categoryStore.clearSelected()
-    ;(log.activities || []).forEach((a) => {
+    incomingActivities.forEach((a) => {
       categoryStore.toggleCategory(a.name)
     })
 
-    // reasonStore
     reasonStore.clearSelected()
-    ;(log.reasons || []).forEach((r) => {
+    incomingReasons.forEach((r) => {
       reasonStore.toggleReason(r.name)
     })
   },

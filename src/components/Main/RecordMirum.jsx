@@ -2,13 +2,11 @@ import { useState } from 'react'
 import { useRef } from 'react'
 import ModalButton from './ModalButton'
 import { useDidStore, useCategoryStore, useReasonStore } from '@/store/calendarStore'
-import { useDefaultReasons } from '@/utils/mirumUtils'
 import { useScrollFocus } from '@/hooks/useScrollFocus'
 import InputBox from './InputBox'
 import { usePostLog } from '@/apis/calendar/queries'
 
 const RecordMirum = ({ date, closeModal }) => {
-  useDefaultReasons()
   const mutation = usePostLog(closeModal)
   const formattedDate = date
     ? date.toLocaleDateString('ko-KR', {
@@ -76,6 +74,7 @@ const RecordMirum = ({ date, closeModal }) => {
                     text={option}
                     selected={didSelected.has(option)}
                     onClick={() => toggleOption(option)}
+                    isDefault={true}
                   />
                 )
               })}
@@ -89,15 +88,21 @@ const RecordMirum = ({ date, closeModal }) => {
               {categories.map((c, id) => {
                 return (
                   <ModalButton
-                    key={`category-${id}-${c}`}
-                    text={c}
-                    selected={categorySelected.has(c)}
-                    onClick={() => toggleCategory(c)}
-                    onDelete={() => useCategoryStore.getState().removeCategory(c)}
+                    key={`category-${id}-${c.name}`}
+                    text={c.name}
+                    selected={categorySelected.has(c.name)}
+                    onClick={() => toggleCategory(c.name)}
+                    onDelete={() => useCategoryStore.getState().removeCategory(c.name)}
+                    isDefault={c.isDefault}
                   />
                 )
               })}
-              <ModalButton text='+' onClick={handleAddCategory} selected={categoryAddBtnOpen} />
+              <ModalButton
+                text='+'
+                onClick={handleAddCategory}
+                selected={categoryAddBtnOpen}
+                isDefault={true}
+              />
               {categoryAddBtnOpen && <InputBox inputRef={inputRef} />}
             </div>
           </div>
@@ -108,14 +113,20 @@ const RecordMirum = ({ date, closeModal }) => {
             >
               {reasons.map((r, id) => (
                 <ModalButton
-                  key={`${r}-${id}`}
-                  text={r}
-                  selected={reasonSelected.has(r)}
-                  onClick={() => toggleReason(r)}
-                  onDelete={() => useReasonStore.getState().removeReason(r)}
+                  key={`${r.name}-${id}`}
+                  text={r.name}
+                  selected={reasonSelected.has(r.name)}
+                  onClick={() => toggleReason(r.name)}
+                  onDelete={() => useReasonStore.getState().removeReason(r.name)}
+                  isDefault={r.isDefault}
                 />
               ))}
-              <ModalButton text='+' onClick={handleAddReason} selected={reasonAddBtnOpen} />
+              <ModalButton
+                text='+'
+                onClick={handleAddReason}
+                selected={reasonAddBtnOpen}
+                isDefault={true}
+              />
               {reasonAddBtnOpen && <InputBox inputRef={inputRef} />}
             </div>
           </div>

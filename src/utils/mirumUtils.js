@@ -1,10 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useUserStore } from '@/store/store'
-import {
-  perfectDefaultReasonList,
-  lowMotivationDefaultReasonList,
-  stressDefaultReasonList,
-} from '@/data/calendarData'
 import {
   useCalendarStore,
   useDidStore,
@@ -13,22 +7,7 @@ import {
   useLogStore,
 } from '@/store/calendarStore'
 import { toISO } from '@/components/Main/CustomDayButton'
-import { getLog } from '@/apis/calendar/axios'
-
-export const useDefaultReasons = () => {
-  const { userType } = useUserStore()
-  const { setReasons } = useReasonStore()
-  useEffect(() => {
-    const list =
-      userType === '완벽주의형'
-        ? perfectDefaultReasonList
-        : userType === '동기저하형'
-          ? lowMotivationDefaultReasonList
-          : stressDefaultReasonList
-
-    setReasons(list)
-  }, [userType, setReasons])
-}
+import { getLog, getTag } from '@/apis/calendar/axios'
 
 export const useRecordModal = () => {
   const [open, setOpen] = useState(false)
@@ -99,12 +78,14 @@ export const useRecordModal = () => {
     // 3) 기록 없고 오늘이면 create 열기
     resetSelections()
     setCurrentLog(null)
+    await getTag()
     setModalMode('create')
     setPickedDay(day)
     setOpen(true)
   }
 
-  const goEdit = (date) => {
+  const goEdit = async (date) => {
+    await getTag()
     setModalMode('edit')
     setOpen(true)
     setPickedDay(date)

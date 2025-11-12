@@ -8,26 +8,14 @@ const SignupWelcomePage = () => {
   const navigate = useNavigate()
 
   function firework() {
-    var duration = 15 * 100
-    var animationEnd = Date.now() + duration
-    var defaults = { startVelocity: 20, spread: 360, ticks: 150, zIndex: 0, scalar: 0.8 }
-
-    var interval = setInterval(function () {
-      var timeLeft = animationEnd - Date.now()
-
-      if (timeLeft <= 0) {
-        return clearInterval(interval)
-      }
-
-      var particleCount = 50 * (timeLeft / duration)
-
-      confetti(
-        Object.assign({}, defaults, {
-          particleCount,
-          origin: { x: 0.5, y: 0.17 },
-        }),
-      )
-    }, 900)
+    var defaults = { startVelocity: 17, spread: 360, ticks: 150, zIndex: 0, scalar: 0.7 }
+    ;(confetti(
+      Object.assign({}, defaults, {
+        particleCount: 30,
+        origin: { x: 0.5, y: 0.17 },
+      }),
+    ),
+      100)
   }
 
   useEffect(() => {

@@ -8,7 +8,3 @@ export const text2 = {
   동기저하형: `'다시 시작할 수 있는 나'를 잊지 말자`,
   스트레스형: '지금은 잠깐 내려놓아도 돼',
 }
-
-export const perfectDefaultReasonList = ['완벽하게 하려다', '준비만 하다가', '결과가 두려워']
-export const lowMotivationDefaultReasonList = ['의욕이 없어서', '자신이 없어서', '귀찮아서']
-export const stressDefaultReasonList = ['머리가 복잡해서', '집중이 안 돼서', '너무 피곤해서']
