@@ -8,7 +8,7 @@ import MoogChiMini from '@/assets/MoogChiMini.svg?react'
 import ReportCard from '@/components/report/ReportCard'
 import ReportBadge from '@/assets/ReportBadge.svg?react'
 import PieChart from '@/components/report/PieChart'
-import { getDashboardData } from '@/apis/report/dashBoard'
+import { getDashboardData } from '@/apis/report/DashBoard'
 
 const ReportPage = () => {
   const { userType, theme, nickname } = useUserStore()
