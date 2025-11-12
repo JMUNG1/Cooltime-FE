@@ -15,6 +15,7 @@ import AllBadgePage from './pages/AllBadgePage'
 import TestResultIntroPage from './pages/TestResultIntroPage'
 import TypeResultPage from './pages/TypeResultPage'
 import MyPage from './pages/MyPage'
+import SignupWelcomePage from './pages/SignupWelcomePage'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: 'login', element: <LoginPage /> },
       { path: 'signup', element: <SignupPage /> },
       { path: 'welcome', element: <WelcomePage /> },
+      { path: 'signupwelcome', element: <SignupWelcomePage /> },
       { path: 'report', element: <ReportPage /> },
       { path: 'report/chart', element: <ChartPage /> },
       { path: 'report/category', element: <CategoryPage /> },

@@ -10,7 +10,7 @@ const WelcomePage = () => {
   const navigate = useNavigate()
   return (
     <div className='flex flex-col items-center'>
-      <div className='flex flex-col items-center w-max-[440px] min-h-screen text-center'>
+      <div className='flex flex-col min-h-screen w-full max-w-[440px] items-center bg-linear-to-b from-main-200 to-white'>
         <h1 className='Title-01-1_1 text-black-400 mt-[15vh]'>쿨타임에 오신 걸 환영합니다!</h1>
         <h3 className='body-01-1_2 text-gray-400 mt-[26px]'>쿨타임과 함께 미룸 습관을 기록하고</h3>
         <h3 className='body-01-1_2 text-gray-400 mt-[-3px]'>

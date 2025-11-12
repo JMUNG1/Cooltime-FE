@@ -134,7 +134,7 @@ const SignupPage = () => {
       } else {
         console.log(formData)
         signup(formData)
-        navigate('/login')
+        navigate('/signupwelcome')
       }
     }
   }
