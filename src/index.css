@@ -5,23 +5,23 @@
 @custom-variant peach (&:where(.theme-peach, .theme-peach *));
 
 @font-face {
-  font-family: 'Regualr';
-  src: url('components/fonts/Pretendard-Regular.woff');
+  font-family: 'Regular';
+  src: url('components/fonts/Pretendard-Regular.woff2');
 }
 
 @font-face {
   font-family: 'Medium';
-  src: url('components/fonts/Pretendard-Medium.woff');
+  src: url('components/fonts/Pretendard-Medium.woff2');
 }
 
 @font-face {
   font-family: 'SemiBold';
-  src: url('components/fonts/Pretendard-SemiBold.woff');
+  src: url('components/fonts/Pretendard-SemiBold.woff2');
 }
 
 @layer base {
   html {
-    font-family: 'Regualr';
+    font-family: 'Regular';
   }
 }
 
