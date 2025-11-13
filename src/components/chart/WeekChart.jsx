@@ -8,15 +8,21 @@ import { getWeekData } from '@/apis/report/postponeRatio'
 import { getCurrentDate } from '@/utils/dateUtils'
 
 const WeekChart = () => {
-  const { weekNames, currentWeek, currentMonth, handlePrevWeek, handleNextWeek, isNextDisabled } =
-    useWeekNavigation()
-  const { year } = getCurrentDate()
+  const {
+    weekNames,
+    currentWeek,
+    currentMonth,
+    currentYear,
+    handlePrevWeek,
+    handleNextWeek,
+    isNextDisabled,
+  } = useWeekNavigation()
   const [data, setData] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getWeekData(year, currentMonth, currentWeek + 1)
+        const data = await getWeekData(currentYear, currentMonth, currentWeek + 1)
         setData(data.data)
         console.log(data.data)
       } catch (error) {
@@ -24,7 +30,7 @@ const WeekChart = () => {
       }
     }
     fetchData()
-  }, [year, currentMonth, currentWeek])
+  }, [currentYear, currentMonth, currentWeek])
 
   const up_down = {
     DOWN: '하락',
@@ -36,13 +42,13 @@ const WeekChart = () => {
     <div className='flex flex-col items-center w-full'>
       <div className='flex flex-col items-center text-center w-[350px]'>
         <div className='flex'>
-          <button className='mr-2' onClick={handlePrevWeek}>
+          <button className='mr-2 cursor-pointer' onClick={handlePrevWeek}>
             <Left />
           </button>
           <p className='Title-01-1_1 text-black-400'>
             {currentMonth}월 {weekNames[currentWeek]} 미룸 비율
           </p>
-          <button className='ml-2 ' onClick={handleNextWeek}>
+          <button className='ml-2 cursor-pointer' onClick={handleNextWeek}>
             {isNextDisabled ? <GreyRight /> : <Right />}
           </button>
         </div>

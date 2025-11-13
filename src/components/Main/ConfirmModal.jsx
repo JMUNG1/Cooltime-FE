@@ -1,11 +1,11 @@
 import MoogChiMini from '@/assets/MoogChiMini.svg?react'
 import ModalX from '@/assets/ModalX.svg?react'
-const ConfirmModal = ({ onClose, message, closeModal }) => {
+const ConfirmModal = ({ onClose, message }) => {
   return (
     <div className='fixed inset-0 z-50 w-full max-w-[440px] mx-auto'>
       <div
         className='absolute inset-0 w-full max-w-[440px] bg-grey-400/30 flex justify-center items-center'
-        onClick={closeModal}
+        onClick={onClose}
       >
         <div
           onClick={(e) => e.stopPropagation()}

@@ -17,7 +17,6 @@ const BarChart = ({ data }) => {
     mint: '#AEE1D1',
     peach: '#FFD6B3',
   }
-  console.log(data)
   const chartColor = color[theme] ?? '#C8CEFF'
   return (
     <div className='w-[343px] h-[300px] min-w-[100px] min-h-[100px] focus:outline-none'>

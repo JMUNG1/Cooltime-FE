@@ -44,7 +44,7 @@ const ChartPage = () => {
             <button
               key={m}
               onClick={() => setMenu(m)}
-              className={`flex-1 rounded-[50px] body-02-1_2 transition-all h-[22px]
+              className={`flex-1 rounded-[50px] body-02-1_2 transition-all h-[22px] cursor-pointer
               ${menu === m ? currentColor.active : currentColor.inactive}`}
             >
               {m}

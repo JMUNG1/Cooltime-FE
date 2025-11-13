@@ -52,7 +52,6 @@ export const getMonthData = async (year, month) => {
 }
 
 export const getYearData = async (year) => {
-  console.log(year)
   try {
     const response = await apiClient.get('/api/stats/postpone-ratio/year/by-year', {
       headers: {

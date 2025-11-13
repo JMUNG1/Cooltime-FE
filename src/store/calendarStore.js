@@ -10,6 +10,10 @@ export const useDidStore = create((set) => ({
       const next = new Set(state.selected)
       if (next.has(o)) {
         next.delete(o)
+        if (next.size === 0) {
+          useCategoryStore.getState().clearSelected()
+          useReasonStore.getState().clearSelected()
+        }
         return { selected: next, isPostponed: true }
       }
       if (o === '했어요') {
@@ -43,34 +47,12 @@ export const useCategoryStore = create((set) => ({
       return { selected: next }
     }),
 
-  addCategory: (newName) =>
+  unselectItem: (name) =>
     set((state) => {
-      if (!newName?.trim()) return state
-      if (state.categories.some((c) => c.name === newName)) return state
-
-      const updated = [
-        ...state.categories,
-        { id: Date.now(), name: newName, isActive: true, isDefault: false },
-      ]
-
-      const didStore = useDidStore.getState()
-      if (didStore.selected.size === 0) {
-        didStore.toggleOption('미뤘어요')
-      }
-
-      return { categories: updated }
+      const next = new Set(state.selected)
+      next.delete(name)
+      return { selected: next }
     }),
-
-  removeCategory: (name) =>
-    set((state) => ({
-      categories: state.categories.filter((c) => c.name !== name),
-      selected: (() => {
-        const next = new Set(state.selected)
-        next.delete(name)
-        return next
-      })(),
-    })),
-
   clearSelected: () => set({ selected: new Set() }),
 }))
 
@@ -94,34 +76,12 @@ export const useReasonStore = create((set) => ({
       return { selected: next }
     }),
 
-  addReason: (newName) =>
+  unselectItem: (name) =>
     set((state) => {
-      if (!newName?.trim()) return state
-      if (state.reasons.some((r) => r.name === newName)) return state
-
-      const updated = [
-        ...state.reasons,
-        { id: Date.now(), name: newName, isActive: true, isDefault: false },
-      ]
-
-      const didStore = useDidStore.getState()
-      if (didStore.selected.size === 0) {
-        didStore.toggleOption('미뤘어요')
-      }
-
-      return { reasons: updated }
+      const next = new Set(state.selected)
+      next.delete(name)
+      return { selected: next }
     }),
-
-  removeReason: (name) =>
-    set((state) => ({
-      reasons: state.reasons.filter((r) => r.name !== name),
-      selected: (() => {
-        const next = new Set(state.selected)
-        next.delete(name)
-        return next
-      })(),
-    })),
-
   clearSelected: () => set({ selected: new Set() }),
 }))
 

@@ -104,7 +104,7 @@ const BadgePage = () => {
           <p className='body-02-1_2 text-gray-600 mt-10'>배지 정보를 불러오는 중...</p>
         )}
         <button
-          className={`mt-25 mb-10 body-02-1_3 ${textColor}`}
+          className={`mt-25 mb-10 body-02-1_3 ${textColor} cursor-pointer`}
           onClick={() => navigate('/report/badge/all')}
         >
           모든 배지 보기

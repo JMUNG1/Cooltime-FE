@@ -6,5 +6,5 @@ export const postTestAnswer = async (payload) => {
     { answers: payload },
     { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
   )
-  return data
+  return data.data
 }

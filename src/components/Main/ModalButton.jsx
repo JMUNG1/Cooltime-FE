@@ -1,13 +1,7 @@
 import { useUserStore } from '@/store/store'
 import X from '@/assets/X.svg?react'
 
-const ModalButton = ({
-  text,
-  selected = false,
-  onClick = () => {},
-  onDelete = () => {},
-  isDefault,
-}) => {
+const ModalButton = ({ text, selected = false, onClick = () => {}, onDelete, isDefault }) => {
   // 테마 로직
   const { theme } = useUserStore()
   const color = {
@@ -29,7 +23,7 @@ const ModalButton = ({
             role='button'
             onClick={(e) => {
               e.stopPropagation()
-              onDelete?.()
+              onDelete?.(text)
             }}
             className='absolute bg-white border -right-1 -top-1 blue:border-blue-400  mint:border-mint-400 peach:border-peach-400 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center cursor-pointer'
           >

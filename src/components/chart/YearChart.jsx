@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import Left from '@/assets/Left.svg?react'
 import Right from '@/assets/Right.svg?react'
-import { getCurrentDate } from '@/utils/dateUtils'
+import GreyRight from '@/assets/GreyRight.svg?react'
 import { getYearData } from '@/apis/report/postponeRatio'
+import { useWeekNavigation } from '@/hooks/useWeekNavigation'
 import BarChart from './BarChart'
 
 const YearChart = () => {
-  const { year } = getCurrentDate()
-  const [currentYear, setCurrentYear] = useState(year)
+  const { currentYear, handlePrevYear, handleNextYear, isNextDisabled } = useWeekNavigation()
   const [data, setData] = useState(null)
 
   useEffect(() => {
@@ -29,26 +29,16 @@ const YearChart = () => {
     NO_DATA: '상승',
   }
 
-  const handlePrevYear = () => {
-    setCurrentYear(currentYear - 1)
-  }
-
-  const handleNextYear = () => {
-    if (year > currentYear) {
-      setCurrentYear(currentYear + 1)
-    }
-  }
-
   return data ? (
     <div className='flex flex-col items-center w-full'>
       <div className='flex flex-col items-center text-center w-[350px]'>
         <div className='flex'>
-          <button className='mr-2' onClick={handlePrevYear}>
+          <button className='mr-2 cursor-pointer' onClick={handlePrevYear}>
             <Left />
           </button>
           <p className='Title-01-1_1 text-black-400'>{currentYear}년 미룸 비율</p>
-          <button className='ml-2 ' onClick={handleNextYear}>
-            <Right />
+          <button className='ml-2 cursor-pointer' onClick={handleNextYear}>
+            {isNextDisabled ? <GreyRight /> : <Right />}
           </button>
         </div>
         <p className='body-02-1_2 text-gray-900 mt-4'>

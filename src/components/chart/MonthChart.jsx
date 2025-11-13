@@ -5,17 +5,16 @@ import Right from '@/assets/Right.svg?react'
 import GreyRight from '@/assets/GreyRight.svg?react'
 import { getMonthData } from '@/apis/report/postponeRatio'
 import { useWeekNavigation } from '@/hooks/useWeekNavigation'
-import { getCurrentDate } from '@/utils/dateUtils'
 
 const MonthChart = () => {
-  const { currentMonth, handlePrevMonth, handleNextMonth, isNextDisabled } = useWeekNavigation()
-  const { year } = getCurrentDate()
+  const { currentMonth, currentYear, handlePrevMonth, handleNextMonth, isNextDisabled } =
+    useWeekNavigation()
   const [data, setData] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getMonthData(year, currentMonth)
+        const data = await getMonthData(currentYear, currentMonth)
         setData(data.data)
         console.log(data.data)
       } catch (error) {
@@ -23,7 +22,7 @@ const MonthChart = () => {
       }
     }
     fetchData()
-  }, [year, currentMonth])
+  }, [currentYear, currentMonth])
 
   const up_down = {
     DOWN: '하락',
@@ -35,11 +34,11 @@ const MonthChart = () => {
     <div className='flex flex-col items-center w-full'>
       <div className='flex flex-col items-center text-center w-[350px]'>
         <div className='flex'>
-          <button className='mr-2' onClick={handlePrevMonth}>
+          <button className='mr-2 cursor-pointer' onClick={handlePrevMonth}>
             <Left />
           </button>
           <p className='Title-01-1_1 text-black-400'>{currentMonth}월 미룸 비율</p>
-          <button className='ml-2 ' onClick={handleNextMonth}>
+          <button className='ml-2 cursor-pointer' onClick={handleNextMonth}>
             {isNextDisabled ? <GreyRight /> : <Right />}
           </button>
         </div>

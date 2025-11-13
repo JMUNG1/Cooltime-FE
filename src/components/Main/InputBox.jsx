@@ -1,7 +1,8 @@
 import UploadBtn from '@/assets/UploadBtn.svg?react'
 import { useUserStore } from '@/store/store'
+import { useState, useRef } from 'react'
 
-const InputBox = ({ inputRef, onClick = () => {} }) => {
+const InputBox = ({ inputRef, onClick, placeholder }) => {
   // 테마 색상
   const { theme } = useUserStore()
   const color = {
@@ -9,6 +10,29 @@ const InputBox = ({ inputRef, onClick = () => {} }) => {
     mint: 'border-mint-300 focus-within:border-mint-400',
     peach: 'border-peach-300 focus-within:border-peach-400',
   }
+
+  const [composing, setComposing] = useState(false)
+  const submittingRef = useRef(false)
+
+  const handleClick = () => {
+    const value = inputRef.current?.value.trim()
+    if (!value) return alert('값을 입력해주세요')
+    submittingRef.current = true
+    onClick(value)
+    inputRef.current.value = ''
+    submittingRef.current = false
+  }
+
+  const handleKeyDown = (e) => {
+    if (composing || e.isComposing || e.nativeEvent?.isComposing) return
+
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      e.stopPropagation()
+      handleClick()
+    }
+  }
+
   const Color = color[theme] ?? null
   return (
     <div>
@@ -18,11 +42,14 @@ const InputBox = ({ inputRef, onClick = () => {} }) => {
         >
           <input
             ref={inputRef}
+            onKeyDown={handleKeyDown}
+            onCompositionStart={() => setComposing(true)}
+            onCompositionEnd={() => setComposing(false)}
             className='resize-none border-none outline-none text-[12px] w-[200px]'
-            placeholder='텍스트를 입력하세요...'
+            placeholder={placeholder}
           />
         </div>
-        <button onClick={onClick}>
+        <button type='button' onClick={handleClick}>
           <UploadBtn className='blue:text-blue-400 mint:text-mint-400 peach:text-peach-400' />
         </button>
       </div>

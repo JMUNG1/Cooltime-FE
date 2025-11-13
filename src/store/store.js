@@ -23,15 +23,19 @@ export const useUserStore = create(
         set({ userType: koreanType, theme: mapTypeTheme(koreanType) })
       },
       setNickname: (n) => set({ nickname: n }),
-      resetUser: () =>
+      resetUser: () => {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('user-store')
+        localStorage.removeItem('refreshToken')
         set({
           userType: '',
           theme: '',
           nickname: '',
-        }),
+        })
+      },
     }),
     {
-      name: 'user-store', // localStorage key
+      name: 'user-store',
     },
   ),
 )

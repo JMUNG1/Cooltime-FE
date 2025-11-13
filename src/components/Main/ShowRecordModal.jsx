@@ -72,10 +72,10 @@ const ShowRecordModal = ({ date, onClick, onEdit, isPostponed }) => {
             수정
           </button>
         )}
-        <div className='font-[SemiBold] text-[18px] font-thin mt-6 mb-3 text-black-400 '>
+        <div className=' text-[18px] font-thin mt-6 mb-3 text-black-400 '>
           {isToday ? '오늘 ' : '이 날의 '}
           {nickname}님의 하루는 <br />
-          <div className={`${HightlightColor} inline pr-[3px]`}>
+          <div className={`${HightlightColor} font-[SemiBold] inline pr-[3px]`}>
             {isPostponed
               ? '완벽하진 않아도 괜찮은 하루였어요'
               : '미루지 않고 할 일을 해낸 하루였어요'}

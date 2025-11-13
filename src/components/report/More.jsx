@@ -15,7 +15,7 @@ const More = ({ onClick = () => {}, disabled = false }) => {
 
   return (
     <button
-      className={`flex flex-col w-5 h-5 ${background} rounded-[50px] items-center pt-0.5`}
+      className={`flex flex-col w-5 h-5 ${background} rounded-[50px] items-center pt-0.5 cursor-pointer`}
       onClick={onClick}
       disabled={disabled}
     >

@@ -4,10 +4,21 @@ import ModalButton from './ModalButton'
 import { useDidStore, useCategoryStore, useReasonStore } from '@/store/calendarStore'
 import { useScrollFocus } from '@/hooks/useScrollFocus'
 import InputBox from './InputBox'
-import { usePostLog } from '@/apis/calendar/queries'
+import {
+  usePostLog,
+  usePostActivity,
+  usePostReason,
+  useDeleteActivity,
+  useDeleteReason,
+  useUpdateLog,
+} from '@/apis/calendar/queries'
 
-const RecordMirum = ({ date, closeModal }) => {
-  const mutation = usePostLog(closeModal)
+const RecordMirum = ({ mode = 'create', onSuccess, date, closeModal }) => {
+  const mutation = mode === 'create' ? usePostLog(closeModal) : useUpdateLog(onSuccess)
+  const { mutate: postActivity } = usePostActivity()
+  const { mutate: postReason } = usePostReason()
+  const { mutate: deleteActivity } = useDeleteActivity()
+  const { mutate: deleteReason } = useDeleteReason()
   const formattedDate = date
     ? date.toLocaleDateString('ko-KR', {
         month: 'long',
@@ -22,13 +33,15 @@ const RecordMirum = ({ date, closeModal }) => {
 
   const handleAddCategory = () => {
     setCategoryAddBtnOpen((prev) => !prev)
+    if (reasonAddBtnOpen) setReasonAddBtnOpen(false)
   }
   const handleAddReason = () => {
     setReasonAddBtnOpen((prev) => !prev)
+    if (categoryAddBtnOpen) setCategoryAddBtnOpen(false)
   }
   const inputRef = useRef(null)
-  useScrollFocus(reasonAddBtnOpen, inputRef)
-  useScrollFocus(categoryAddBtnOpen, inputRef)
+  const isInputOpen = categoryAddBtnOpen || reasonAddBtnOpen
+  useScrollFocus(isInputOpen, inputRef)
 
   // store 로직
   const options = useDidStore((d) => d.options)
@@ -75,6 +88,7 @@ const RecordMirum = ({ date, closeModal }) => {
                     selected={didSelected.has(option)}
                     onClick={() => toggleOption(option)}
                     isDefault={true}
+                    onDelete={() => {}}
                   />
                 )
               })}
@@ -92,7 +106,7 @@ const RecordMirum = ({ date, closeModal }) => {
                     text={c.name}
                     selected={categorySelected.has(c.name)}
                     onClick={() => toggleCategory(c.name)}
-                    onDelete={() => useCategoryStore.getState().removeCategory(c.name)}
+                    onDelete={() => deleteActivity(c.name)}
                     isDefault={c.isDefault}
                   />
                 )
@@ -102,8 +116,15 @@ const RecordMirum = ({ date, closeModal }) => {
                 onClick={handleAddCategory}
                 selected={categoryAddBtnOpen}
                 isDefault={true}
+                onDelete={() => {}}
               />
-              {categoryAddBtnOpen && <InputBox inputRef={inputRef} />}
+              {categoryAddBtnOpen && (
+                <InputBox
+                  inputRef={inputRef}
+                  onClick={(value) => postActivity(value)}
+                  placeholder={'텍스트를 입력하세요...'}
+                />
+              )}
             </div>
           </div>
           <div>
@@ -113,11 +134,11 @@ const RecordMirum = ({ date, closeModal }) => {
             >
               {reasons.map((r, id) => (
                 <ModalButton
-                  key={`${r.name}-${id}`}
+                  key={`reason-${id}-${r.name}`}
                   text={r.name}
                   selected={reasonSelected.has(r.name)}
                   onClick={() => toggleReason(r.name)}
-                  onDelete={() => useReasonStore.getState().removeReason(r.name)}
+                  onDelete={() => deleteReason(r.name)}
                   isDefault={r.isDefault}
                 />
               ))}
@@ -126,8 +147,15 @@ const RecordMirum = ({ date, closeModal }) => {
                 onClick={handleAddReason}
                 selected={reasonAddBtnOpen}
                 isDefault={true}
+                onDelete={() => {}}
               />
-              {reasonAddBtnOpen && <InputBox inputRef={inputRef} />}
+              {reasonAddBtnOpen && (
+                <InputBox
+                  inputRef={inputRef}
+                  onClick={(value) => postReason(value)}
+                  placeholder={'ex) 완벽하게 하려다...'}
+                />
+              )}
             </div>
           </div>
         </div>

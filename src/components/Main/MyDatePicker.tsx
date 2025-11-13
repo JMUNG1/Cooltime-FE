@@ -6,8 +6,9 @@ import { type ThHTMLAttributes, type TableHTMLAttributes } from 'react'
 import '@/index.css'
 import { CustomMonthCaption } from './CustomMonthCaption'
 import { CustomDayButton } from './CustomDayButton'
-import { getCalendar } from '@/apis/calendar/axios'
 import { useCalendarStore } from '@/store/calendarStore'
+import { useGetCalendar } from '@/apis/calendar/queries'
+import { useNavigate } from 'react-router-dom'
 
 export function MyDatePicker({
   onPickDay,
@@ -18,25 +19,28 @@ export function MyDatePicker({
 }) {
   const postponedCount = useCalendarStore((c) => c.postponedCount)
   const completedCount = useCalendarStore((c) => c.completedCount)
+  const navigate = useNavigate()
 
   const [currentMonth, setCurrentMonth] = useState(new Date())
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 
+  const year = currentMonth.getFullYear()
+  const month = currentMonth.getMonth() + 1
+
+  const { isError } = useGetCalendar({ year, month: month })
   const handleMonthChange = (month: Date) => {
     setCurrentMonth(month)
-    setCurrentYear(month.getFullYear())
-
-    const year = month.getFullYear()
-    const monthNum = month.getMonth() + 1
-
-    getCalendar({ year, month: monthNum })
-    console.log('현재 달:', year, monthNum)
   }
 
   useEffect(() => {
-    const monthNum = currentMonth.getMonth() + 1
-    getCalendar({ year: currentYear, month: monthNum })
-  }, [currentYear, currentMonth])
+    console.log('현재 달:', year, month)
+  }, [year, month])
+
+  useEffect(() => {
+    if (isError) {
+      alert('캘린더 로드에 실패했습니다. 다시 로그인해주세요')
+      navigate('/')
+    }
+  }, [isError, navigate])
 
   function CustomChevron() {
     return null

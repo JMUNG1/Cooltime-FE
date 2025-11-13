@@ -7,7 +7,9 @@ import {
   useLogStore,
 } from '@/store/calendarStore'
 import { toISO } from '@/components/Main/CustomDayButton'
-import { getLog, getTag } from '@/apis/calendar/axios'
+import { getLog } from '@/apis/calendar/axios'
+import { useQueryClient } from '@tanstack/react-query'
+import { useGetTag } from '@/apis/calendar/queries'
 
 export const useRecordModal = () => {
   const [open, setOpen] = useState(false)
@@ -15,10 +17,13 @@ export const useRecordModal = () => {
   const [modalMode, setModalMode] = useState('create') // 'create' | 'show' | 'edit'
   const [showSuccess, setShowSuccess] = useState(false)
   const [showRestriction, setShowRestriction] = useState(false)
+  const [showCreateSuccess, setShowCreateSuccess] = useState(false)
+
+  const queryClient = useQueryClient()
+  useGetTag()
 
   const monthLogs = useCalendarStore((s) => s.logs)
   const setCurrentLog = useLogStore((s) => s.setCurrentLog)
-  const initSelectionsFromCurrentLog = useLogStore((s) => s.initSelectionsFromCurrentLog)
 
   const clearDid = useDidStore((s) => s.clearSelected)
   const clearCategory = useCategoryStore((s) => s.clearSelected)
@@ -61,11 +66,15 @@ export const useRecordModal = () => {
 
     // 1) 기록 있는 날이면 그대로 열기
     if (dayLog) {
-      await getLog(iso)
-      initSelectionsFromCurrentLog()
-      setModalMode('show')
-      setPickedDay(day)
-      setOpen(true)
+      const log = await getLog(iso)
+
+      if (log) {
+        setModalMode('show')
+        setPickedDay(day)
+        setOpen(true)
+      } else {
+        alert('로그 데이터가 없습니다')
+      }
       return
     }
 
@@ -78,14 +87,14 @@ export const useRecordModal = () => {
     // 3) 기록 없고 오늘이면 create 열기
     resetSelections()
     setCurrentLog(null)
-    await getTag()
+    await queryClient.invalidateQueries({ queryKey: ['tag'] })
     setModalMode('create')
     setPickedDay(day)
     setOpen(true)
   }
 
   const goEdit = async (date) => {
-    await getTag()
+    await queryClient.invalidateQueries({ queryKey: ['tag'] })
     setModalMode('edit')
     setOpen(true)
     setPickedDay(date)
@@ -102,5 +111,7 @@ export const useRecordModal = () => {
     goEdit,
     showRestriction,
     setShowRestriction,
+    showCreateSuccess,
+    setShowCreateSuccess,
   }
 }

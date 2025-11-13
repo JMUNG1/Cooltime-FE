@@ -81,10 +81,21 @@ const ReportPage = () => {
 
         <div className='flex'>
           <ReportCard title='카테고리별'>
-            <p className='Title-01-1_2 text-black mt-0.5'>{Data?.categoryName || '운동'}</p>
-            <p className='body-03-1_2 text-black mt-0.5'>를 제일 미뤘어요.</p>
-            <p className='body-03-1_2 text-gray-400 mt-2.5'>카테고리별 미룬 일을</p>
-            <p className='body-03-1_2 text-gray-400 -mt-1'>확인해보세요.</p>
+            <p className='Title-01-1_2 text-black mt-0.5'>{Data?.categoryName || ''}</p>
+            {Data?.categoryName && (
+              <p className='body-03-1_2 text-black mt-0.5'>를 제일 미뤘어요.</p>
+            )}
+            {Data?.categoryName ? (
+              <>
+                <p className='body-03-1_2 text-gray-400 mt-2.5'>카테고리별 미룬 일을</p>
+                <p className='body-03-1_2 text-gray-400 -mt-1'>확인해보세요.</p>
+              </>
+            ) : (
+              <>
+                <p className='body-03-1_2 text-gray-400 mt-17'>아직 미룬 일이 없어요.</p>
+                <p className='body-03-1_2 text-gray-400 -mt-1'>첫 기록을 남겨보세요!</p>
+              </>
+            )}
           </ReportCard>
 
           <div className='mr-4' />

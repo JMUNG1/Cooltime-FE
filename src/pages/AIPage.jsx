@@ -5,23 +5,27 @@ import Left from '@/assets/Left.svg?react'
 import Right from '@/assets/Right.svg?react'
 import GreyRight from '@/assets/GreyRight.svg?react'
 import { useWeekNavigation } from '@/hooks/useWeekNavigation'
-import { getCurrentDate } from '@/utils/dateUtils'
 import AIContainer from '@/components/ai/AIContainer'
 import { getAIReportData } from '@/apis/report/AIReport'
 import Loading from '@/components/shared/Loading'
 
 const AIPage = () => {
-  const { weekNames, currentWeek, currentMonth, handlePrevWeek, handleNextWeek, isNextDisabled } =
-    useWeekNavigation()
+  const {
+    weekNames,
+    currentWeek,
+    currentMonth,
+    currentYear,
+    handlePrevWeek,
+    handleNextWeek,
+    isNextDisabled,
+  } = useWeekNavigation()
   const { theme } = useUserStore()
-  const { year } = getCurrentDate()
   const [data, setData] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(year, currentMonth, currentWeek + 1)
-        const data = await getAIReportData(year, currentMonth, currentWeek + 1)
+        const data = await getAIReportData(currentYear, currentMonth, currentWeek + 1)
         setData(data.data)
         console.log(data.data)
       } catch (error) {
@@ -29,7 +33,7 @@ const AIPage = () => {
       }
     }
     fetchData()
-  }, [year, currentMonth, currentWeek])
+  }, [currentYear, currentMonth, currentWeek])
 
   const color = {
     blue: {

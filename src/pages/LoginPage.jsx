@@ -54,7 +54,7 @@ const LoginPage = () => {
     <div className='flex flex-col items-center'>
       <div className='max-w-[440px] w-full'>
         <div className='mt-10 ml-4'>
-          <button onClick={() => navigate(-1)}>
+          <button onClick={() => navigate(-1)} className='cursor-pointer'>
             <Back />
           </button>
         </div>

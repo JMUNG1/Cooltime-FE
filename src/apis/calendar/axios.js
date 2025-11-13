@@ -1,22 +1,14 @@
 import apiClient from '../login/axiosConfig'
-import { useCalendarStore } from '@/store/calendarStore'
 import { useDidStore, useCategoryStore, useReasonStore, useLogStore } from '@/store/calendarStore'
 import { useUserStore } from '@/store/store'
 import { userTypeMap } from '@/utils/userTypeMap'
 
 export const getCalendar = async ({ year, month }) => {
-  const { setLogs, setCompletedCount, setPostponedCount } = useCalendarStore.getState()
   const { data } = await apiClient.get(`/api/calendar?year=${year}&month=${month}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
   })
-  console.log(data.data)
-  const summary = data.data.summary
-  const logs = data.data.logs
-  setLogs(logs)
-  setCompletedCount(summary.completedCount)
-  setPostponedCount(summary.postponedCount)
 
-  return data
+  return data.data
 }
 
 export const postLog = async () => {
@@ -76,27 +68,34 @@ export const updateLog = async () => {
 }
 
 export const getLog = async (dateString) => {
-  const { data } = await apiClient.get(`/api/log?date=${dateString}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    },
-  })
-  console.log(data)
-  const res = data.data
-  // 서버 응답을 스토어가 먹을 수 있는 모양으로 변환
-  const normalized = {
-    ...res,
-    type: userTypeMap[res.myType] ?? null,
-    activities: (res.activities || []).map((name, idx) => ({ id: idx, name })),
-    reasons: (res.reasons || []).map((name, idx) => ({ id: idx, name })),
-  }
-
   const { setCurrentLog, initSelectionsFromCurrentLog } = useLogStore.getState()
-  setCurrentLog(normalized)
-  // 이거 하면 did/category/reason 스토어들도 서버 데이터로 선택 상태 맞춰짐
-  initSelectionsFromCurrentLog()
 
-  return normalized
+  try {
+    if (!dateString) throw new Error('Invalid date parameter.')
+
+    const { data } = await apiClient.get(`/api/log?date=${dateString}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+
+    const res = data.data
+    const normalized = {
+      ...res,
+      type: userTypeMap[res.myType] ?? null,
+      activities: (res.activities || []).map((name, idx) => ({ id: idx, name })),
+      reasons: (res.reasons || []).map((name, idx) => ({ id: idx, name })),
+    }
+
+    setCurrentLog(normalized)
+    initSelectionsFromCurrentLog()
+
+    return normalized
+  } catch (err) {
+    console.error('기록 조회 실패:', err)
+    setCurrentLog(null)
+    throw err
+  }
 }
 
 export const getTag = async () => {
@@ -126,9 +125,52 @@ export const getTag = async () => {
       isDefault: r.isDefault,
     }
   })
-  const { setCategories } = useCategoryStore.getState()
-  const { setReasons } = useReasonStore.getState()
-  setCategories(activities)
-  setReasons(reasons)
+
   return { activities, reasons }
+}
+
+export const postActivity = async ({ name }) => {
+  const { data } = await apiClient.post(
+    '/api/activity',
+    { name: name },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    },
+  )
+  return data
+}
+
+export const deleteActivity = async ({ name }) => {
+  const { data } = await apiClient.delete('/api/activity', {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+    data: { name: name },
+  })
+  return data
+}
+
+export const postReason = async ({ name }) => {
+  const { data } = await apiClient.post(
+    '/api/reason',
+    { name: name },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    },
+  )
+  return data
+}
+
+export const deleteReason = async ({ name }) => {
+  const { data } = await apiClient.delete('/api/reason', {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+    data: { name: name },
+  })
+  return data
 }

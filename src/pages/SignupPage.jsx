@@ -142,7 +142,7 @@ const SignupPage = () => {
     <div className='flex flex-col items-center'>
       <div className='flex flex-col w-full max-w-[440px] min-h-screen'>
         <div className='mt-10 ml-4'>
-          <button onClick={() => navigate(-1)}>
+          <button onClick={() => navigate(-1)} className='cursor-pointer'>
             <Back />
           </button>
         </div>
