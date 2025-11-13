@@ -42,7 +42,7 @@ const SignupPage = () => {
   useEffect(() => {
     setState('default')
     setDisabled(currentValue.trim().length === 0)
-  }, [currentValue])
+  }, [currentValue, formData.confirmPassword])
 
   useEffect(() => {
     setState('default')

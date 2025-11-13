@@ -7,7 +7,7 @@ import { useUserStore } from '@/store/store'
 export const useTestStep = () => {
   const [step, setStep] = useState(0)
   const navigate = useNavigate()
-  const [selectedAnswers, setSelectedAnswers] = useState(Array(7).fill(null))
+  const [selectedAnswers, setSelectedAnswers] = useState(Array(steps.length).fill(null))
   const setUserType = useUserStore((s) => s.setUserType)
 
   const handleSelectAnswer = (answerId) => {
@@ -26,7 +26,7 @@ export const useTestStep = () => {
     try {
       const payload = selectedAnswers.map((v) => Number(v))
       const data = await postTestAnswer(payload)
-      console.log('response:', data) // ✅ 찍기
+      console.log('response:', data)
 
       const mytype = data?.data?.mytype ?? data?.mytype
       if (mytype) setUserType(mytype)

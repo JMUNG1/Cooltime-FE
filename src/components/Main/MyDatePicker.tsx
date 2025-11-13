@@ -59,11 +59,9 @@ export function MyDatePicker({
         weekStartsOn={1}
         mode='single'
         onMonthChange={handleMonthChange}
-        selected={selected}
         onSelect={(day) => {
           onPickDay(day)
         }}
-        footer={selected ? `Selected: ${selected.toLocaleDateString()}` : null}
         navLayout='around'
         components={{
           MonthCaption: (props) => (

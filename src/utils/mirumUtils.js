@@ -66,14 +66,17 @@ export const useRecordModal = () => {
 
     // 1) 기록 있는 날이면 그대로 열기
     if (dayLog) {
-      const log = await getLog(iso)
-
-      if (log) {
-        setModalMode('show')
-        setPickedDay(day)
-        setOpen(true)
-      } else {
-        alert('로그 데이터가 없습니다')
+      try {
+        const log = await getLog(iso)
+        if (log) {
+          setModalMode('show')
+          setPickedDay(day)
+          setOpen(true)
+        } else {
+          alert('로그 데이터가 없습니다')
+        }
+      } catch (e) {
+        alert('기록을 불러오는 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.')
       }
       return
     }

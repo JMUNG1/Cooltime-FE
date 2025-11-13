@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Return from '@/assets/Return.svg'
 
-const ProgressBar = ({ step, totalSteps = 7, onBack }) => {
+const ProgressBar = ({ step, totalSteps, onBack }) => {
   const [mounted, setMounted] = useState(false)
   const segments = Array.from({ length: totalSteps })
   useEffect(() => {

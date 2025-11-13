@@ -94,6 +94,10 @@ export const getLog = async (dateString) => {
   } catch (err) {
     console.error('기록 조회 실패:', err)
     setCurrentLog(null)
+
+    if (err.response?.status === 404) {
+      return null
+    }
     throw err
   }
 }
@@ -112,7 +116,6 @@ export const getTag = async () => {
     return {
       id: a.id ?? idx,
       name: a.name,
-      isActive: a.isActive,
       isDefault: a.isDefault,
     }
   })
@@ -121,7 +124,6 @@ export const getTag = async () => {
     return {
       id: r.id ?? id,
       name: r.name,
-      isActive: r.isActive,
       isDefault: r.isDefault,
     }
   })
