@@ -94,7 +94,7 @@ const ShowRecordModal = ({ date, onClick, onEdit, isPostponed }) => {
               {isPostponed ? (
                 <>
                   <div className='text-black-400 text-[12px] mb-1'>{Activities}을/를 미뤘어요</div>
-                  <div className='text-black-400 text-[18px] font-[Medium] mb-0 mt-0 whitespace-pre-wrap break-keep'>
+                  <div className='text-black-400 text-[18px] font-[Medium] mb-0 mt-0 whitespace-pre-wrap wrap-break-words'>
                     {reasons.join(', ')} <span className='font-[Regular]'>미뤘어요</span>
                   </div>
                 </>

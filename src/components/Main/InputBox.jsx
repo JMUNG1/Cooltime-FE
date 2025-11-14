@@ -26,8 +26,8 @@ const InputBox = ({ inputRef, onClick, placeholder }) => {
   const handleChange = (e) => {
     const value = e.target.value
 
-    if (value.length > 16) {
-      alert('16자 이내로 입력해주세요.')
+    if (value.length >= 16) {
+      alert('16자 이내로 입력해주세요!')
       e.target.value = value.slice(0, 16)
     }
   }

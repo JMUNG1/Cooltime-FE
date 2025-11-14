@@ -80,8 +80,8 @@ const ReportPage = () => {
 
         <div className='flex'>
           <ReportCard title='카테고리별'>
-            <p className='Title-01-1_2 text-black mt-0.5 max-w-[135px] overflow-hidden text-ellipsis whitespace-nowrap '>
-              {'안녕하세요안녕하세요안녕하세요하'}
+            <p className='Title-01-1_2 text-black mt-0.5 max-w-[135px] min-h-10.5 overflow-hidden text-ellipsis whitespace-nowrap '>
+              {Data?.categoryName}
             </p>
             {Data?.categoryName && (
               <p className='body-03-1_2 text-black mt-0.5'>를 제일 미뤘어요.</p>
