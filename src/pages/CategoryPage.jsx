@@ -16,7 +16,6 @@ const CategoryPage = () => {
       try {
         const data = await getCategoryData()
         setData(data.data)
-        console.log(data.data)
       } catch (error) {
         console.error(error)
       }
@@ -81,7 +80,7 @@ const CategoryPage = () => {
             ))}
           </motion.div>
         ) : (
-          <p className='body-02-1_2 text-gray-600 mt-10'>카테고리 정보를 불러오는 중...</p>
+          <></>
         )}
       </div>
     </div>

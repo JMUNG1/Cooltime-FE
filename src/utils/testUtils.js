@@ -26,7 +26,6 @@ export const useTestStep = () => {
     try {
       const payload = selectedAnswers.map((v) => Number(v))
       const data = await postTestAnswer(payload)
-      console.log('response:', data)
 
       const mytype = data?.data?.mytype ?? data?.mytype
       if (mytype) setUserType(mytype)

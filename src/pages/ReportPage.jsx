@@ -19,7 +19,6 @@ const ReportPage = () => {
       try {
         const data = await getDashboardData()
         setData(data.data)
-        console.log(data.data)
       } catch (error) {
         console.error(error)
       }

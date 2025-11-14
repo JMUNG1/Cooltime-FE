@@ -21,7 +21,6 @@ export const login = async (id, password) => {
     }
 
     const data = await response.json()
-    console.log(data)
     return { success: true, data }
   } catch (err) {
     console.error('로그인 중 오류 발생:', err)

@@ -5,7 +5,6 @@ import Right from '@/assets/Right.svg?react'
 import GreyRight from '@/assets/GreyRight.svg?react'
 import { useWeekNavigation } from '@/hooks/useWeekNavigation'
 import { getWeekData } from '@/apis/report/postponeRatio'
-import { getCurrentDate } from '@/utils/dateUtils'
 
 const WeekChart = () => {
   const {
@@ -24,7 +23,6 @@ const WeekChart = () => {
       try {
         const data = await getWeekData(currentYear, currentMonth, currentWeek + 1)
         setData(data.data)
-        console.log(data.data)
       } catch (error) {
         console.error(error)
       }
@@ -78,7 +76,7 @@ const WeekChart = () => {
       </div>
     </div>
   ) : (
-    <p className='body-02-1_2 text-gray-600 mt-10'>정보를 불러오는 중...</p>
+    <></>
   )
 }
 

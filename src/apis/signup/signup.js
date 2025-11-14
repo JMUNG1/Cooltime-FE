@@ -21,7 +21,6 @@ export const signup = async (formData) => {
     }
 
     const data = await response.json()
-    console.log('회원가입 성공:', data)
     return { success: true, data }
   } catch (err) {
     console.error('회원가입 요청 중 오류 발생:', err)

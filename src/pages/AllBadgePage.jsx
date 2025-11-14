@@ -24,7 +24,6 @@ const AllBadgePage = () => {
       try {
         const data = await getBadgeData()
         setData(data.data)
-        console.log(data.data)
       } catch (error) {
         console.error(error)
       }
@@ -104,7 +103,7 @@ const AllBadgePage = () => {
             </div>
           </>
         ) : (
-          <p className='body-02-1_2 text-gray-600 mt-10'>배지 정보를 불러오는 중...</p>
+          <></>
         )}
       </div>
     </div>

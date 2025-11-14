@@ -16,7 +16,6 @@ const MonthChart = () => {
       try {
         const data = await getMonthData(currentYear, currentMonth)
         setData(data.data)
-        console.log(data.data)
       } catch (error) {
         console.error(error)
       }
@@ -68,7 +67,7 @@ const MonthChart = () => {
       </div>
     </div>
   ) : (
-    <p className='body-02-1_2 text-gray-600 mt-10'>정보를 불러오는 중...</p>
+    <></>
   )
 }
 

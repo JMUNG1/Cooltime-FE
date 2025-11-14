@@ -18,7 +18,7 @@ const AIPage = () => {
     handlePrevWeek,
     handleNextWeek,
     isNextDisabled,
-  } = useWeekNavigation()
+  } = useWeekNavigation({ initialPrevWeek: true })
   const { theme } = useUserStore()
   const [data, setData] = useState(null)
 
@@ -27,7 +27,6 @@ const AIPage = () => {
       try {
         const data = await getAIReportData(currentYear, currentMonth, currentWeek + 1)
         setData(data.data)
-        console.log(data.data)
       } catch (error) {
         console.error(error)
       }
@@ -64,7 +63,7 @@ const AIPage = () => {
               <Left />
             </button>
             <p className='Title-01-1_1 text-black-400'>
-              {currentMonth}월 {weekNames[currentWeek]} 미룸 비율
+              {currentMonth}월 {weekNames[currentWeek]} 미룸 레포트
             </p>
             <button className='ml-2 ' onClick={handleNextWeek}>
               {isNextDisabled ? <GreyRight /> : <Right />}

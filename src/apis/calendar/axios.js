@@ -29,7 +29,6 @@ export const postLog = async () => {
     activities: selectedCategories,
     reasons: selectedReasons,
   }
-  console.log(payload)
 
   const { data } = await apiClient.post('/api/log', payload, {
     headers: {
@@ -57,7 +56,6 @@ export const updateLog = async () => {
     activities: selectedCategories,
     reasons: selectedReasons,
   }
-  console.log(payload)
 
   const { data } = await apiClient.put('/api/log', payload, {
     headers: {
@@ -108,7 +106,6 @@ export const getTag = async () => {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
     },
   })
-  console.log(data)
   const Activities = data.data?.activities || []
   const Reasons = data.data?.reasons || []
 

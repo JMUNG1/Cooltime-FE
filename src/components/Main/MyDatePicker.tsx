@@ -32,10 +32,6 @@ export function MyDatePicker({
   }
 
   useEffect(() => {
-    console.log('현재 달:', year, month)
-  }, [year, month])
-
-  useEffect(() => {
     if (isError) {
       alert('캘린더 로드에 실패했습니다. 다시 로그인해주세요')
       navigate('/')

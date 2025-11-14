@@ -54,7 +54,7 @@ export function CustomMonthCaption({
         >
           <CalendarLeftArrow />
         </button>
-        <span className='font-semibold text-black-400'>
+        <span className='font-[Medium] text-black-400'>
           {calendarMonth.date.toLocaleString('ko-KR', { year: 'numeric', month: 'long' })}
         </span>
         <button

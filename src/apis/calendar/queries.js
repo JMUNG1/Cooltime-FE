@@ -38,8 +38,6 @@ export const useGetCalendar = ({ year, month }) => {
       const summary = data.summary
       const logs = data.logs
 
-      console.log(data)
-
       setLogs(logs)
       setCompletedCount(summary.completedCount)
       setPostponedCount(summary.postponedCount)
@@ -148,7 +146,6 @@ export const usePostActivity = () => {
     mutationFn: (name) => postActivity({ name }),
     onSuccess: async (res) => {
       await queryClient.invalidateQueries({ queryKey: ['tag'] })
-      console.log('활동 추가 성공' + res)
     },
     onError: (err) => {
       console.error('활동 추가 실패', err)
@@ -162,7 +159,6 @@ export const useDeleteActivity = () => {
   return useMutation({
     mutationFn: (name) => deleteActivity({ name }),
     onSuccess: async (res, name) => {
-      console.log('활동 삭제 성공' + res)
       const categoryStore = useCategoryStore.getState()
       categoryStore.unselectItem(name)
       await queryClient.invalidateQueries({ queryKey: ['tag'] })
@@ -179,7 +175,6 @@ export const usePostReason = () => {
   return useMutation({
     mutationFn: (name) => postReason({ name }),
     onSuccess: async (res) => {
-      console.log('이유 추가 성공' + res)
       await queryClient.invalidateQueries({ queryKey: ['tag'] })
     },
     onError: (err) => {
@@ -194,7 +189,6 @@ export const useDeleteReason = () => {
   return useMutation({
     mutationFn: (name) => deleteReason({ name }),
     onSuccess: async (res, name) => {
-      console.log('이유 삭제 성공' + res)
       const reasonStore = useReasonStore.getState()
       reasonStore.unselectItem(name)
       await queryClient.invalidateQueries({ queryKey: ['tag'] })
