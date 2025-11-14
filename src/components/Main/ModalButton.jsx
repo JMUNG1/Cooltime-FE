@@ -9,7 +9,9 @@ const ModalButton = ({ text, selected = false, onClick = () => {}, onDelete, isD
     mint: `${selected ? 'text-white bg-[linear-gradient(180deg,var(--color-mint-400)_0%,#63CAAA_100%)] border-mint-400' : 'text-grey-400 border-mint-400'} hover:border-mint-400`,
     peach: `${selected ? 'text-white bg-[linear-gradient(180deg,var(--color-peach-400)_0%,#F59F55_100%)] border-peach-400' : 'text-grey-400 border-peach-400 hover:border-peach-400'}`,
   }
-  const labelColor = color[theme] ?? null
+  const labelColor =
+    color[theme] ??
+    `${selected ? 'text-white bg-[linear-gradient(180deg,var(--color-main-400)_0%,#8F9BFF_100%)] border-main-400' : 'text-grey-400 border-main-400'} hover:border-main-400`
 
   return (
     <div>

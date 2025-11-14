@@ -26,6 +26,7 @@ const YearChart = () => {
     DOWN: '하락',
     UP: '상승',
     NO_DATA: '상승',
+    SAME: '상승',
   }
 
   return data ? (

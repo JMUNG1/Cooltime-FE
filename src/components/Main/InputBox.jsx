@@ -33,7 +33,7 @@ const InputBox = ({ inputRef, onClick, placeholder }) => {
     }
   }
 
-  const Color = color[theme] ?? null
+  const Color = color[theme] ?? 'border-main-300 focus-within:border-main-400'
   return (
     <div>
       <div className='flex gap-4'>

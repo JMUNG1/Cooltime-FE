@@ -60,7 +60,7 @@ export function CustomDayButton(props: DayButtonProps) {
 
   let content: React.ReactNode = (
     <span
-      className={`${isPast ? 'text-grey-400' : isToday ? 'blue:text-blue-700 peach:text-peach-700 mint:text-mint-700 ' : 'text-black-400'}`}
+      className={`text-[12px] ${isPast ? 'text-grey-400' : isToday ? 'text-red ' : 'text-black-400'}`}
     >
       {label}
     </span>

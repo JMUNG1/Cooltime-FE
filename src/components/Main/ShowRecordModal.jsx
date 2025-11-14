@@ -43,19 +43,23 @@ const ShowRecordModal = ({ date, onClick, onEdit, isPostponed }) => {
     peach:
       'bg-[linear-gradient(180deg,var(--color-peach-200)_19.65%,var(--color-peach-100)_28.23%)]',
   }
-  const BgColor = bgColor[theme]
+  const BgColor =
+    bgColor[theme] ??
+    'bg-[linear-gradient(180deg,var(--color-main-200)_19.65%,var(--color-main-100)_28.23%)]'
   const highlightColor = {
     blue: 'bg-[linear-gradient(transparent_40%,rgba(200,206,255,0.4)_20%)]',
     mint: 'bg-[linear-gradient(transparent_40%,rgba(174,225,209,0.4)_20%)]',
     peach: 'bg-[linear-gradient(transparent_40%,rgba(255,214,179,0.4)_20%)]',
   }
-  const HightlightColor = highlightColor[theme]
+  const HightlightColor =
+    highlightColor[theme] ?? 'bg-[linear-gradient(transparent_40%,rgba(200,206,255,0.4)_20%)]'
+
   const btnColor = {
     blue: 'bg-blue-400',
     mint: 'bg-mint-400',
     peach: 'bg-peach-400 ',
   }
-  const BtnColor = btnColor[theme]
+  const BtnColor = btnColor[theme] ?? 'bg-main-400'
 
   return (
     <div
