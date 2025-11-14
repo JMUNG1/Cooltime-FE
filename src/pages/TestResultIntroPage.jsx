@@ -51,7 +51,7 @@ const TestResultIntroPage = () => {
           />
         </div>
       </div>
-      <div className='absolute bottom-10 justify-center z-10'>
+      <div className='absolute bottom-5 justify-center z-10'>
         <Button label='결과 보기' onClick={() => navigate('/result')} />
       </div>
     </div>

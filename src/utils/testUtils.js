@@ -29,7 +29,7 @@ export const useTestStep = () => {
 
       const mytype = data?.data?.mytype ?? data?.mytype
       if (mytype) setUserType(mytype)
-      navigate('/result')
+      navigate('/result/intro')
     } catch (err) {
       console.error('테스트 제출 실패', err)
       alert('결과 제출 중 오류가 발생했습니다. 다시 시도해주세요.')
