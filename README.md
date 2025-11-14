@@ -73,11 +73,11 @@
 ### Team Member
 | &nbsp;&nbsp;이&nbsp;름&nbsp;&nbsp; | 프로필                                                              |  역할 |                                    역할분담                         |
 | :--------------------------------------: | :-------------------------------------------------------------------: | :--------------------: | :-------------------------------------------------: |
-| 박진희 |  | PM / DE | 기획, UI/UX 디자인, 발표 자료 제작 |
+| 박진희 | <img width="200" height="200" alt="KakaoTalk_Photo_2025-11-14-20-14-27" src="https://github.com/user-attachments/assets/f0aa4d92-96d2-43b3-8197-6e833bbe006a" /> | PM / DE | 기획, UI/UX 디자인, 발표 자료 제작 |
 | 박세은 | <img width="200" height="200" alt="seeun_profile" src="https://github.com/user-attachments/assets/04515f3c-2c24-4e18-b29e-82dea6e54833" />| FE | 회원가입/로그인, 분석, 기타 페이지, 배포   |
 | 이연서 |<img width="200" height="200" alt="IMG_9873" src="https://github.com/user-attachments/assets/6386f341-e74b-4449-8de9-3869a90ad131" />| FE | 테스트, 홈, 마이페이지 |
-| 문재연 |  | BE |  |
-| 조민정 |  | BE |  |
+| 문재연 | <img width="200" height="200" alt="IMG_9874" src="https://github.com/user-attachments/assets/5f9d31b4-3d3e-4db6-9926-bc713e42e14e" />| BE | 분석, 배지, AI레포트, 배지 |
+| 조민정 | <img width="200" height="200" alt="IMG_9875" src="https://github.com/user-attachments/assets/75ea3419-df30-43df-af55-04405e84e441" />| BE | 회원, 유형 테스트, 미룸 기록 |
 </br>
 
 ### Tech Stacks
@@ -89,7 +89,7 @@
 
 ### 폴더 구조
 
-``` Spotal-FE/
+``` Cooltime-FE/
 Cooltime-FE/
 ├── 📁 public/                          # 정적 파일
 │   └── Favicon.png                     # 파비콘 이미지

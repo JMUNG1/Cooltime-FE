@@ -102,6 +102,12 @@ export const useWeekNavigation = ({ initialPrevWeek = false } = {}) => {
 
   const handleNextWeek = () => {
     if (
+      initialPrevWeek &&
+      (currentYear > nowYear ||
+        (currentYear === nowYear && currentMonth >= nowMonth && currentWeek >= nowWeekIndex - 1))
+    )
+      return
+    else if (
       currentYear > nowYear ||
       (currentYear === nowYear && currentMonth >= nowMonth && currentWeek >= nowWeekIndex)
     )
@@ -161,10 +167,13 @@ export const useWeekNavigation = ({ initialPrevWeek = false } = {}) => {
     }
   }
 
-  const isNextDisabled =
-    currentYear > nowYear ||
-    (currentYear === nowYear &&
-      (currentMonth > nowMonth || (currentMonth === nowMonth && currentWeek >= nowWeekIndex)))
+  const isNextDisabled = initialPrevWeek
+    ? currentYear > nowYear ||
+      (currentYear === nowYear &&
+        (currentMonth > nowMonth || (currentMonth === nowMonth && currentWeek >= nowWeekIndex - 1)))
+    : currentYear > nowYear ||
+      (currentYear === nowYear &&
+        (currentMonth > nowMonth || (currentMonth === nowMonth && currentWeek >= nowWeekIndex)))
 
   return {
     weekNames,

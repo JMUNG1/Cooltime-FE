@@ -61,9 +61,9 @@ const ReportPage = () => {
           <ReportCard title='총 기록일' more={false}>
             <p className='Title-01-1_2 text-black mt-0.5'>{Data?.recordedDays || 0}일</p>
             <p className='body-03-1_2 text-gray-400 mt-0.5'>
-              {Data?.totalDays || 0}일 중 {Data?.recordedDays || 0}일 기록했어요.
+              {Data?.totalDays || 0}일 중 {Data?.recordedDays || 0}일
             </p>
-            <p className='body-03-1_2 text-gray-400 -mt-1'>연속 기록을 향해봐요!</p>
+            <p className='body-03-1_2 text-gray-400'>기록했어요.</p>
             <div className='flex flex-col items-end justify-end text-end w-full mt-1'>
               <MoogChiMini />
             </div>
@@ -80,7 +80,9 @@ const ReportPage = () => {
 
         <div className='flex'>
           <ReportCard title='카테고리별'>
-            <p className='Title-01-1_2 text-black mt-0.5'>{Data?.categoryName || ''}</p>
+            <p className='Title-01-1_2 text-black mt-0.5 max-w-[135px] overflow-hidden text-ellipsis whitespace-nowrap '>
+              {'안녕하세요안녕하세요안녕하세요하'}
+            </p>
             {Data?.categoryName && (
               <p className='body-03-1_2 text-black mt-0.5'>를 제일 미뤘어요.</p>
             )}

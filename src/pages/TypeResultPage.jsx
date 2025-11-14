@@ -35,7 +35,7 @@ const TypeResultPage = () => {
           </p>
         </div>
         {Image}
-        <div className='bg-white rounded-t-4xl shadow-s px-10 py-8 w-full grow flex flex-col gap-6'>
+        <div className='bg-white rounded-t-4xl shadow-s px-10 py-8 w-full grow flex flex-col gap-[5vh]'>
           <div className='flex w-full justify-center'>
             <Label label={label} />
           </div>
@@ -47,7 +47,7 @@ const TypeResultPage = () => {
             <br />
             {Text2}
           </div>
-          <div className='w-full flex items-center fixed bottom-10 left-0'>
+          <div className='w-full flex items-center mt-[4vh] left-0'>
             <button
               onClick={() => navigate('/home')}
               className='block mx-auto rounded-full w-[343px] h-[53px] text-[18px] font-[SemiBold] text-white cursor-pointer blue:bg-blue-500 mint:bg-mint-500 peach:bg-peach-500'

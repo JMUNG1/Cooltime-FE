@@ -13,7 +13,7 @@ const TestPage = () => {
     <div className='flex min-h-screen justify-center items-center w-full scrollbar-hide'>
       <div className='w-full flex flex-col items-center max-w-[440px] min-h-screen bg-[linear-gradient(180deg,#fff_30.79%,#F2F5FF_100%)]'>
         <ProgressBar step={step} totalSteps={steps.length} onBack={prevStep} />
-        <div className='relative mt-[12.53vh] w-[235px] h-[62px] flex justify-center items-center'>
+        <div className='relative mt-[10vh] w-[235px] h-[62px] flex justify-center items-center'>
           <p
             className='whitespace-pre-line w-full pt-5 text-center text-[26px] font-[SemiBold] font-light text-black-400'
             dangerouslySetInnerHTML={{ __html: currentStep.question }}
@@ -33,7 +33,7 @@ const TestPage = () => {
             </div>
           ))}
         </div>
-        <div className='absolute bottom-10'>
+        <div className='mt-[8vh]'>
           <Button
             disabled={selectedAnswers[step] == null}
             label={step < steps.length - 1 ? '다음' : '완료'}

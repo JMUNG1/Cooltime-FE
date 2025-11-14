@@ -2,7 +2,7 @@ import React from 'react'
 
 const CategoryList = ({ data, color }) => {
   return (
-    <div className='w-[343px] h-[65px] shadow-xs bg-white mb-4 rounded-2xl p-[11px]'>
+    <div className='w-[343px] min-h-[65px] shadow-xs bg-white mb-4 rounded-2xl p-[11px]'>
       <div className='flex'>
         <div
           className={`flex flex-col justify-center items-center w-[43px] h-[43px] rounded-[27.5px] ${color} mr-4`}
