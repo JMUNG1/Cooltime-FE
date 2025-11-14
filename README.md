@@ -77,7 +77,7 @@
 | 박세은 | <img width="200" height="200" alt="seeun_profile" src="https://github.com/user-attachments/assets/04515f3c-2c24-4e18-b29e-82dea6e54833" />| FE | 회원가입/로그인, 분석, 기타 페이지, 배포   |
 | 이연서 |<img width="200" height="200" alt="IMG_9873" src="https://github.com/user-attachments/assets/6386f341-e74b-4449-8de9-3869a90ad131" />| FE | 테스트, 홈, 마이페이지 |
 | 문재연 | <img width="200" height="200" alt="IMG_9874" src="https://github.com/user-attachments/assets/5f9d31b4-3d3e-4db6-9926-bc713e42e14e" />| BE | 분석, 배지, AI레포트, 배지 |
-| 조민정 | <img width="200" height="200" alt="IMG_9875" src="https://github.com/user-attachments/assets/75ea3419-df30-43df-af55-04405e84e441" />| BE | 회원, 유형 테스트, 미룸 기록 |
+| 조민정 |<img width="200" height="200" alt="KakaoTalk_Photo_2025-11-14-21-44-31" src="https://github.com/user-attachments/assets/7241a190-24f6-41d2-a563-5d72ef43d35d" />| BE | 회원, 유형 테스트, 미룸 기록 |
 </br>
 
 ### Tech Stacks

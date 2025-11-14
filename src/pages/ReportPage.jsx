@@ -80,7 +80,7 @@ const ReportPage = () => {
 
         <div className='flex'>
           <ReportCard title='카테고리별'>
-            <p className='Title-01-1_2 text-black mt-0.5 max-w-[135px] min-h-10.5 overflow-hidden text-ellipsis whitespace-nowrap '>
+            <p className='Title-01-1_2 text-black mt-0.5 max-w-[135px] overflow-hidden text-ellipsis whitespace-nowrap '>
               {Data?.categoryName}
             </p>
             {Data?.categoryName && (
@@ -112,9 +112,15 @@ const ReportPage = () => {
             height='74px'
             disabled={!Data?.aiReportAvailable || false}
           >
-            <p className='body-03-1_2 text-gray-400 mt-2'>
-              AI가 당신의 미룸 패턴을 읽고, 가볍게 솔루션을 제안해드려요.
-            </p>
+            {Data?.aiReportAvailable ? (
+              <p className='body-03-1_2 text-gray-400 mt-2'>
+                AI가 당신의 미룸 패턴을 읽고, 가볍게 솔루션을 제안해드려요.
+              </p>
+            ) : (
+              <p className='body-03-1_2 text-gray-400 mt-2'>
+                3일 이상 기록하면, 다음 주 월요일에 확인할 수 있어요!
+              </p>
+            )}
           </ReportCard>
         </div>
         <Footer selectedMenu='report' />
