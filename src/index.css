@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Aquire&display=swap');
 @import 'tailwindcss';
 
 @font-face {
@@ -71,6 +70,12 @@
   font-style: normal;
   font-display: swap;
   src: url('/fonts/Pretendard/Pretendard-Black.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Aquire';
+  src: url('/fonts/aquire/AquireBold.woff2') format('woff2');
+  font-display: swap;
 }
 
 @layer base {
